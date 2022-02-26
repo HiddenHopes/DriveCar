@@ -8,14 +8,18 @@ public class Board extends JPanel{
     Image backgroundImage;
     Car car = new Car();
 
-    Board(){
+    Board() throws Exception {
         ImageIcon imageIcon = new ImageIcon("background.png");
         backgroundImage = imageIcon.getImage();
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e){
                 super.keyPressed(e);
-                car.move(e);
+                try {
+                    car.move(e);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
 
             @Override
