@@ -1,5 +1,3 @@
-package OurGame;
-
 import java.awt.Image;
 
 import javax.swing.ImageIcon;

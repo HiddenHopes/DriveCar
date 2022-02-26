@@ -1,12 +1,10 @@
-package OurGame;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class Dude {
+public class Car {
 int x, dx , y, dy, nx2, nx, h, b;
 Image still, rstill, car, rcar, fly;
 ImageIcon i = new ImageIcon("still.gif");
@@ -15,7 +13,7 @@ ImageIcon n = new ImageIcon("rcar.png");
 ImageIcon j = new ImageIcon("rstill.gif");
 ImageIcon k = new ImageIcon("fly.gif");
 
-public Dude(){
+public Car(){
 	still = m.getImage();
 	fly = k.getImage();
 	x = 50;

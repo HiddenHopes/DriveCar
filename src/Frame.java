@@ -1,5 +1,3 @@
-package OurGame;
-
 import java.io.File;
 
 import javax.sound.sampled.*;
