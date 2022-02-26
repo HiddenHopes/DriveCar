@@ -4,16 +4,29 @@ import java.awt.event.KeyEvent;
 
 public class Car {
     Image carImage;
+    Image carStopImage;
+    Image carRunningRight;
+    ImageIcon carImageIcon;
     int x;
-    Car(){
-        ImageIcon imageIcon = new ImageIcon("car.png");
-        carImage = imageIcon.getImage();
-        x = 300;
 
+    Car() {
+        carImageIcon = new ImageIcon("car.png");
+        carStopImage = carImageIcon.getImage();
+
+        carImageIcon = new ImageIcon("carRunningRight.gif");
+        carRunningRight = carImageIcon.getImage();
+
+        carImage = carStopImage;
+        x = 120;
     }
-    public void move(KeyEvent e){
-        int key = e.getKeyCode();
-        if(key== 39) x = x+2;
-        if(key== 37) x= x-2;
+
+    void move(KeyEvent e) {
+        carImage = carRunningRight;
+        if(e.getKeyCode() == 39) x = x+5;
+        if(e.getKeyCode() == 37) x = x-5;
+    }
+
+    void stop(){
+        carImage = carStopImage;
     }
 }
