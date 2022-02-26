@@ -19,7 +19,7 @@ public class Frame {
 		frame.setVisible(true);
 		
 		AudioInputStream sample;
-		sample = AudioSystem.getAudioInputStream(new File("D:/eclipse/DriveCar/rap.wav"));
+		sample = AudioSystem.getAudioInputStream(new File("rap.wav"));
 		
 		Clip clip = AudioSystem.getClip();
 		clip.open(sample);
