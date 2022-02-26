@@ -16,8 +16,7 @@ public class Board extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                if(e.getKeyCode()==39) car.x = car.x + 5;
-                if(e.getKeyCode()==37) car.x = car.x - 5;
+                car.move(e);
             }
         });
         setFocusable(true);
