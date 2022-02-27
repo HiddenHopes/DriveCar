@@ -4,7 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-public class Board extends JPanel{
+public class Board extends JPanel {
     Image backgroundImage;
     Car car = new Car();
 
@@ -13,7 +13,7 @@ public class Board extends JPanel{
         backgroundImage = imageIcon.getImage();
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e){
+            public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 try {
                     car.move(e);
@@ -33,8 +33,14 @@ public class Board extends JPanel{
 
     public void paint(Graphics g) {
         super.paint(g);
-        g.drawImage(backgroundImage, 0,0, this);
-        g.drawImage(car.carImage, car.x,450, this );
+        g.drawImage(backgroundImage, 0, 0, this);
+        g.drawImage(car.carImage, car.x, 450, this);
+
+        for (int w = 0; w < car.bullets.size(); w++) {
+            Bullet m = (Bullet) car.bullets.get(w);
+            m.fireRight();
+            g.drawImage(m.bulletImage, m.x + 85, m.y + 10, null);
+        }
         repaint();
     }
 }
