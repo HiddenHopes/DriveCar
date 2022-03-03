@@ -8,66 +8,112 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Car {
     Image carImage;
-    Image carStopImage;
+
+    Image carRightImage;
+    Image carLeftImage;
     Image carRunningRight;
-    ImageIcon carImageIcon;
+    Image carRunningLeft;
+    ImageIcon imageIcon;
+
     int x;
-    Clip player1;
-    Clip player2;
-    AudioInputStream carRunningSound;
+
+    AudioInputStream carDriveSound;
+    Clip carSoundPlayer;
     AudioInputStream fireSound;
-    List bullets;
+    Clip fireSoundPlayer;
+
+    List<Bullet> bullets;
+    boolean isRight;
+
+    boolean isRightKeyPressed;
+    boolean isLeftKeyPressed;
+    boolean isSpaceKeyPressed;
 
     Car() throws Exception {
-        carImageIcon = new ImageIcon("car.png");
-        carStopImage = carImageIcon.getImage();
+        imageIcon = new ImageIcon("carRight.png");
+        carRightImage = imageIcon.getImage();
 
-        carImageIcon = new ImageIcon("carRunningRight.gif");
-        carRunningRight = carImageIcon.getImage();
+        imageIcon = new ImageIcon("carLeft.png");
+        carLeftImage = imageIcon.getImage();
 
-        carImage = carStopImage;
-        x = 120;
+        imageIcon = new ImageIcon("runningRight.gif");
+        carRunningRight = imageIcon.getImage();
 
-        carRunningSound = AudioSystem.getAudioInputStream(new File("car_drive_sound.wav"));
-        player1 = AudioSystem.getClip();
+        imageIcon = new ImageIcon("runningLeft.gif");
+        carRunningLeft = imageIcon.getImage();
+
+        carImage = carRightImage;
+        x = 300;
+
+
+        carDriveSound = AudioSystem.getAudioInputStream(new File("car_drive_sound.wav"));
+        carSoundPlayer = AudioSystem.getClip();
+        if (carSoundPlayer.isOpen() == false) carSoundPlayer.open(carDriveSound);
 
         fireSound = AudioSystem.getAudioInputStream(new File("fire_sound.wav"));
-        player2 = AudioSystem.getClip();
-        bullets = new ArrayList();
+        fireSoundPlayer = AudioSystem.getClip();
+        if (fireSoundPlayer.isOpen() == false) fireSoundPlayer.open(fireSound);
+
+        bullets = new ArrayList<>();
+        isRight = true;
+
+        isRightKeyPressed = false;
+        isLeftKeyPressed = false;
+        isSpaceKeyPressed = false;
+
     }
 
-    void move(KeyEvent e) throws Exception {
-        carImage = carRunningRight;
-        if (e.getKeyCode() == 39) x = x + 5;
-        if (e.getKeyCode() == 37) x = x - 5;
-        if (player1.isOpen() == false) player1.open(carRunningSound);
-        player1.loop(Clip.LOOP_CONTINUOUSLY);
+    void whenKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == 39) {
+            isRightKeyPressed = true;
+        }
+        if (e.getKeyCode() == 37) {
+            isLeftKeyPressed = true;
+        }
 
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (player2.isOpen() == false) player2.open(fireSound);
-            player2.start();
-            rightFire();
+            isSpaceKeyPressed = true;
+            fireSoundPlayer.stop();
+            fireSoundPlayer.setFramePosition(0);
         }
     }
 
-    void stop() {
-        carImage = carStopImage;
-        player1.stop();
-        player1.setFramePosition(0);
-        player2.stop();
-        player2.setFramePosition(0);
+    void whenKeyReleased(KeyEvent e) {
+        if (e.getKeyCode() == 39) {
+            isRightKeyPressed = false;
+            carImage = carRightImage;
+            carSoundPlayer.stop();
+            carSoundPlayer.setFramePosition(0);
+        }
+        if (e.getKeyCode() == 37) {
+            isLeftKeyPressed = false;
+            carImage = carLeftImage;
+            carSoundPlayer.stop();
+            carSoundPlayer.setFramePosition(0);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && isSpaceKeyPressed) {
+            isSpaceKeyPressed = false;
+            Bullet bullet = new Bullet(x, 450, isRight);
+            bullets.add(bullet);
+            fireSoundPlayer.start();
+        }
     }
 
-    public void rightFire() {
-        Bullet bullet = new Bullet(x, 450);
-        bullets.add(bullet);
-    }
-
-    public void leftFire() {
-        Bullet bullet = new Bullet(310, 450);
-        bullets.add(bullet);
-
+    void move() {
+        if (isRightKeyPressed) {
+            carImage = carRunningRight;
+            x = x + 5;
+            carSoundPlayer.loop(Clip.LOOP_CONTINUOUSLY);
+            isRight = true;
+        }
+        if (isLeftKeyPressed) {
+            carImage = carRunningLeft;
+            x = x - 5;
+            carSoundPlayer.loop(Clip.LOOP_CONTINUOUSLY);
+            isRight = false;
+        }
     }
 }
