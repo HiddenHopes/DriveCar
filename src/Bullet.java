@@ -10,16 +10,18 @@ public class Bullet {
     Bullet(boolean isRight) {
         x = 120;
         y = 450;
-        ImageIcon imageIcon = new ImageIcon("bullet.gif");
+        ImageIcon imageIcon = new ImageIcon("bullet30degree.gif");
         bulletImage = imageIcon.getImage();
         direction = isRight;
     }
 
     void fireRight() {
         x = x + 15;
+        y = y - 10;
     }
 
     void fireLeft() {
         x = x - 15;
+        y = y - 10;
     }
 }
