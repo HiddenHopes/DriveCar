@@ -7,9 +7,9 @@ public class Bullet {
     int y;
     boolean direction;
 
-    Bullet(int startX, int startY, boolean isRight) {
-        x = startX;
-        y = startY;
+    Bullet(boolean isRight) {
+        x = 120;
+        y = 450;
         ImageIcon imageIcon = new ImageIcon("bullet.gif");
         bulletImage = imageIcon.getImage();
         direction = isRight;

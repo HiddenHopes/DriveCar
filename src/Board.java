@@ -39,8 +39,11 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.drawImage(backgroundImage, 0, 0, this);
-        g.drawImage(car.carImage, car.x, 450, this);
+        g.drawImage(backgroundImage, car.backgroundX1, 0, this);
+        //System.out.println("backgroundX1 = " + car.backgroundX1);
+        g.drawImage(backgroundImage, car.backgroundX2, 0, this);
+        //System.out.println("backgroundX2 = "+ car.backgroundX2);
+        g.drawImage(car.carImage, 120, 450, this);
         for (Bullet b : car.bullets) {
             if (0 < b.x && b.x < 1048) g.drawImage(b.bulletImage, b.x, 450, this);
         }
@@ -53,6 +56,10 @@ public class Board extends JPanel implements ActionListener {
             if (b.direction) b.fireRight();
             else b.fireLeft();
         }
+        if(car.backgroundX1<=-1024) car.backgroundX1 = car.backgroundX2+1024;
+        if(car.backgroundX2<=-1024) car.backgroundX2 = car.backgroundX1+1024;
+        if(car.backgroundX1>=1024) car.backgroundX1 = car.backgroundX2-1024;
+        if(car.backgroundX2>=1024) car.backgroundX2 = car.backgroundX1-1024;
 
         repaint();
     }

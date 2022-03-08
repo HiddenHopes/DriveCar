@@ -18,7 +18,8 @@ public class Car {
     Image carRunningLeft;
     ImageIcon imageIcon;
 
-    int x;
+    int backgroundX1;
+    int backgroundX2;
 
     AudioInputStream carDriveSound;
     Clip carSoundPlayer;
@@ -46,8 +47,8 @@ public class Car {
         carRunningLeft = imageIcon.getImage();
 
         carImage = carRightImage;
-        x = 300;
-
+        backgroundX1 = 0;
+        backgroundX2 = 1024;
 
         carDriveSound = AudioSystem.getAudioInputStream(new File("car_drive_sound.wav"));
         carSoundPlayer = AudioSystem.getClip();
@@ -96,7 +97,7 @@ public class Car {
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE && isSpaceKeyPressed) {
             isSpaceKeyPressed = false;
-            Bullet bullet = new Bullet(x, 450, isRight);
+            Bullet bullet = new Bullet(isRight);
             bullets.add(bullet);
             fireSoundPlayer.start();
         }
@@ -105,13 +106,15 @@ public class Car {
     void move() {
         if (isRightKeyPressed) {
             carImage = carRunningRight;
-            x = x + 5;
+            backgroundX1 = backgroundX1 - 5;
+            backgroundX2 = backgroundX2 - 5;
             carSoundPlayer.loop(Clip.LOOP_CONTINUOUSLY);
             isRight = true;
         }
         if (isLeftKeyPressed) {
             carImage = carRunningLeft;
-            x = x - 5;
+            backgroundX1 = backgroundX1 + 5;
+            backgroundX2 = backgroundX2 + 5;
             carSoundPlayer.loop(Clip.LOOP_CONTINUOUSLY);
             isRight = false;
         }
